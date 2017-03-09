@@ -6,11 +6,12 @@ import com.microsoft.cognitive.speakerrecognition.SpeakerIdentificationClient;
 import com.microsoft.cognitive.speakerrecognition.contract.EnrollmentStatus;
 import com.microsoft.cognitive.speakerrecognition.contract.identification.EnrollmentOperation;
 import com.microsoft.cognitive.speakerrecognition.contract.identification.OperationLocation;
-import com.microsoft.cognitive.speakerrecognition.contract.identification.Status;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.UUID;
+
+import static com.example.informatik.cognitizer.Tasks.Constants.TASK_DELAY;
 
 public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> {
     private static UUID createUserUUID;
@@ -38,6 +39,8 @@ public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> 
             EnrollmentStatus enrollmentStatus = null;
             com.microsoft.cognitive.speakerrecognition.contract.identification.Status operationStatus = com.microsoft.cognitive.speakerrecognition.contract.identification.Status.NOTSTARTED;
             do {
+                //Let Microsoft think before we retry
+                Thread.sleep(TASK_DELAY);
                 EnrollmentOperation enrollmentStatusResult = speakerIdentificationClient.checkEnrollmentStatus(enrollResult);
 
                 //Wait until Microsoft finishes analysing
@@ -46,7 +49,6 @@ public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> 
                         && enrollmentStatusResult.processingResult != null) {
                     enrollmentStatus = enrollmentStatusResult.processingResult.enrollmentStatus;
                 }
-
             }while(enrollmentStatus == null);
 
             result = new EnrollUserTaskResult(enrollmentStatus);
