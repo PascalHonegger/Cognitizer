@@ -10,22 +10,24 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
         <include layout="@layout/app_bar"/>
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/placeholder"
+        android:id="@+id/analysePlaceholder"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:layout_alignParentBottom="true">
-        <include layout="@layout/bottom_nav_log" />
+        <include layout="@layout/bottom_nav_analyser" />
     </LinearLayout>
 
 </RelativeLayout>

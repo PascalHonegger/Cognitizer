@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item
+            android:id="@+id/action_login"
+            android:enabled="true"
+            android:icon="@drawable/camera"
+            android:title="PictureAnalyser"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/action_register"
+            android:enabled="true"
+            android:icon="@drawable/text_fields"
+            android:title="TextAnalyser"
+            app:showAsAction="ifRoom" />
+</menu>
