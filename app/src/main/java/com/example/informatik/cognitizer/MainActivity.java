@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -42,9 +43,12 @@ public class MainActivity extends Activity {
     private MediaRecorder recorder;
 
     public void switchRecordingState(View v) {
+        FloatingActionButton fab = (FloatingActionButton) v;
         if(recorder == null) {
+            fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.mic_activate));
             startRecording();
         } else {
+            fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.mic_deactivate));
             stopRecording();
         }
     }

@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.example.informatik.cognitizer.Tasks.Constants.TASK_DELAY;
+
 public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskResult> {
     private Exception exception;
     private SpeakerIdentificationClient speakerIdentificationClient;
@@ -47,6 +49,9 @@ public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskRe
 
             Identification identifiedUser = null;
             do {
+                //Let Microsoft think before we retry
+                Thread.sleep(TASK_DELAY);
+
                 IdentificationOperation identificationStatusResult = speakerIdentificationClient.checkIdentificationStatus(identifyResult);
 
                 //Wait until Microsoft finishes analysing
