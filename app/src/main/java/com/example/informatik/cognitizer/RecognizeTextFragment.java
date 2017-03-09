@@ -1,34 +1,24 @@
 package com.example.informatik.cognitizer;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.informatik.cognitizer.Tasks.RecognizeTextTask;
 import com.example.informatik.cognitizer.helper.ExceptionHandler;
 import com.example.informatik.cognitizer.helper.ImageHelper;
-import com.example.informatik.cognitizer.helper.SelectImageActivity;
 import com.example.informatik.cognitizer.helper.UserFeedbackHelper;
 import com.microsoft.projectoxford.vision.VisionServiceClient;
 import com.microsoft.projectoxford.vision.VisionServiceRestClient;
 
-import static android.app.Activity.RESULT_OK;
-
 public class RecognizeTextFragment extends ImageUsingFragmentBase {
-
-    // Flag to indicate which task is to be performed.
-    private static final int REQUEST_SELECT_IMAGE = 0;
-
     // The image selected to detect.
     private Bitmap mBitmap;
 
@@ -56,7 +46,7 @@ public class RecognizeTextFragment extends ImageUsingFragmentBase {
 
         setupViewEvents(view);
 
-        resultText = (EditText)view.findViewById(R.id.editTextResult);
+        resultText = (EditText)view.findViewById(R.id.resultText);
         imageView = (ImageView)view.findViewById(R.id.selectedImage);
 
         return view;
