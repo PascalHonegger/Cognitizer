@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
-            android:id="@+id/action_login"
+            android:id="@+id/action_picture"
             android:enabled="true"
             android:icon="@drawable/camera"
             android:title="PictureAnalyser"
             app:showAsAction="ifRoom" />
 
         <item
-            android:id="@+id/action_register"
+            android:id="@+id/action_text"
             android:enabled="true"
             android:icon="@drawable/text_fields"
             android:title="TextAnalyser"
