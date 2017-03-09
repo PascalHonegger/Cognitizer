@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MediaRecorder recorder;
 
-    public void SwitchRecordingState(View v) {
+    public void switchRecordingState(View v) {
         if(recorder == null) {
             startRecording();
         } else {

@@ -9,7 +9,6 @@ import com.microsoft.cognitive.speakerrecognition.contract.EnrollmentStatus;
 public class EnrollUserTaskResult {
     private Exception exception;
     private EnrollmentStatus enrollmentStatus;
-    private boolean success;
 
     public EnrollUserTaskResult(EnrollmentStatus enrollmentStatus) {
         this.exception = null;
