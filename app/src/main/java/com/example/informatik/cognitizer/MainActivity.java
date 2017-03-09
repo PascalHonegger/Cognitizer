@@ -10,9 +10,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
 import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
@@ -25,6 +28,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(!checkAndGetPermissions()) {
+            Toast.makeText(this, "Permissions are required for this app to function properly!", Toast.LENGTH_LONG).show();
+        }
 
         final Context context = this;
 
@@ -42,7 +49,38 @@ public class MainActivity extends Activity {
 
     private MediaRecorder recorder;
 
+    /**
+     * @return True if all permissions are received
+     */
+    private boolean checkAndGetPermissions() {
+
+        List<String> missingPermissions = new ArrayList<>();
+
+        addPermissionIfNotGranted(missingPermissions, Manifest.permission.INTERNET);
+        addPermissionIfNotGranted(missingPermissions, Manifest.permission.READ_EXTERNAL_STORAGE);
+        addPermissionIfNotGranted(missingPermissions, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        addPermissionIfNotGranted(missingPermissions, Manifest.permission.CAMERA);
+        addPermissionIfNotGranted(missingPermissions, Manifest.permission.RECORD_AUDIO);
+
+        if(missingPermissions.size() > 0) {
+            requestPermissions((String[]) missingPermissions.toArray(), 42);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void addPermissionIfNotGranted(List<String> missingPermissions, String permission) {
+        if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+            missingPermissions.add(permission);
+        }
+    }
+
     public void switchRecordingState(View v) {
+        if(!checkAndGetPermissions()) {
+            return;
+        }
+
         FloatingActionButton fab = (FloatingActionButton) v;
         if(recorder == null) {
             fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.mic_activate));
@@ -53,19 +91,8 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void startRecording() {
+    private void startRecording() {
         recorder = new MediaRecorder();
-
-        int recordAudioPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECORD_AUDIO);
-
-        if(recordAudioPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.RECORD_AUDIO},
-                    //TODO Const value
-                    42);
-            return;
-        }
 
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
@@ -107,17 +134,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void stopRecording() {
-        int internetPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
-
-        if(internetPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.INTERNET},
-                    //TODO Const value
-                    22);
-            return;
-        }
-
+    private void stopRecording() {
         recorder.stop();
         recorder.release();
         recorder = null;
