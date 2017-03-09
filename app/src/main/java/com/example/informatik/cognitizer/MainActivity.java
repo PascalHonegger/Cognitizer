@@ -96,7 +96,13 @@ public class MainActivity extends AppCompatActivity {
         addPermissionIfNotGranted(missingPermissions, Manifest.permission.RECORD_AUDIO);
 
         if(missingPermissions.size() > 0) {
-            requestPermissions((String[]) missingPermissions.toArray(), 42);
+            String[] permissionsToRequest = new String[missingPermissions.size()];
+
+            for (int i = 0; i < missingPermissions.size(); i++) {
+                permissionsToRequest[i] = missingPermissions.get(i);
+            }
+
+            requestPermissions(permissionsToRequest, 42);
             return false;
         } else {
             return true;
