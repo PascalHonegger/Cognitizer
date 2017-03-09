@@ -5,61 +5,70 @@ import android.os.AsyncTask;
 import com.microsoft.cognitive.speakerrecognition.SpeakerIdentificationClient;
 import com.microsoft.cognitive.speakerrecognition.contract.EnrollmentStatus;
 import com.microsoft.cognitive.speakerrecognition.contract.identification.EnrollmentOperation;
+import com.microsoft.cognitive.speakerrecognition.contract.identification.Identification;
+import com.microsoft.cognitive.speakerrecognition.contract.identification.IdentificationOperation;
 import com.microsoft.cognitive.speakerrecognition.contract.identification.OperationLocation;
+import com.microsoft.cognitive.speakerrecognition.contract.identification.Profile;
 import com.microsoft.cognitive.speakerrecognition.contract.identification.Status;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> {
-    private static UUID createUserUUID;
-
+public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskResult> {
     private Exception exception;
     private SpeakerIdentificationClient speakerIdentificationClient;
 
-    public EnrollUserTask(SpeakerIdentificationClient speakerIdentificationClient)
+    public AuthorizeUserTask(SpeakerIdentificationClient speakerIdentificationClient)
     {
         this.speakerIdentificationClient = speakerIdentificationClient;
     }
 
     @Override
-    protected EnrollUserTaskResult doInBackground(File... params) {
-        EnrollUserTaskResult result;
+    protected AuthorizeUserTaskResult doInBackground(File... params) {
+        AuthorizeUserTaskResult result;
 
         try {
-            //Create a new user if the register button is pressed for the first time
-            if(createUserUUID == null) {
-                createUserUUID = speakerIdentificationClient.createProfile("en-US").identificationProfileId;
+            //TODO Save users locally?
+            List<Profile> profiles = speakerIdentificationClient.getProfiles();
+
+            List<UUID> allUsers = new ArrayList<>();
+
+            for (Profile p : profiles) {
+                allUsers.add(p.identificationProfileId);
             }
 
-            OperationLocation enrollResult = speakerIdentificationClient.enroll(new FileInputStream(params[0]), createUserUUID, true);
+            OperationLocation identifyResult = speakerIdentificationClient.identify(new FileInputStream(params[0]), allUsers, true);
 
-            EnrollmentStatus enrollmentStatus = null;
+
             com.microsoft.cognitive.speakerrecognition.contract.identification.Status operationStatus = com.microsoft.cognitive.speakerrecognition.contract.identification.Status.NOTSTARTED;
+
+            Identification identifiedUser = null;
             do {
-                EnrollmentOperation enrollmentStatusResult = speakerIdentificationClient.checkEnrollmentStatus(enrollResult);
+                IdentificationOperation identificationStatusResult = speakerIdentificationClient.checkIdentificationStatus(identifyResult);
 
                 //Wait until Microsoft finishes analysing
                 if((operationStatus == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.SUCCEEDED
                         || operationStatus == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.FAILED)
-                        && enrollmentStatusResult.processingResult != null) {
-                    enrollmentStatus = enrollmentStatusResult.processingResult.enrollmentStatus;
+                        && identificationStatusResult.processingResult != null) {
+                    identifiedUser = identificationStatusResult.processingResult;
                 }
 
-            }while(enrollmentStatus == null);
+            }while(identifiedUser == null);
 
-            result = new EnrollUserTaskResult(enrollmentStatus);
+            result = new AuthorizeUserTaskResult(identifiedUser.identifiedProfileId, identifiedUser.confidence);
         } catch (Exception e) {
             this.exception = e;
 
-            result = new EnrollUserTaskResult(e);
+            result = new AuthorizeUserTaskResult(e);
         }
 
         return result;
     }
 
-    protected void onPostExecute(EnrollUserTaskResult result) {
+    protected void onPostExecute(AuthorizeUserTaskResult result) {
         // TODO: check this.exception
         // TODO: do something with the feed
         if(exception != null) {
