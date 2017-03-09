@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 
 import java.io.File;
@@ -38,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
                 ExceptionHandler.handleException(context, e);
             }
         });
+
+        setContentView(R.layout.activity_main);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
     }
 
     private MediaRecorder recorder;
@@ -132,4 +139,10 @@ public class MainActivity extends AppCompatActivity {
                 // Start conversion
                 .convert();
     }
+
+    /*public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.app_bar_action, menu);
+        return true;
+    }*/
 }

@@ -5,6 +5,5 @@
         android:id="@+id/action_favorite"
         android:icon="@drawable/exit_to_app_black"
         android:title="exit"
-        android:tint="@android:color/primary_text_dark"
         app:showAsAction="ifRoom"/>
 </menu>
