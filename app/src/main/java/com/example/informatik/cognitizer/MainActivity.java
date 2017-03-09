@@ -7,8 +7,15 @@ import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,9 +27,11 @@ import java.util.List;
 import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
 import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private File outputFile;
+    private BottomNavigationView bottomNavigationView;
+    private android.app.FragmentManager manager = getFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,28 @@ public class MainActivity extends Activity {
                 ExceptionHandler.handleException(context, e);
             }
         });
+
+        setContentView(R.layout.activity_main);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                        switch (item.getItemId()) {
+                            case R.id.action_login:
+                                //TODO: manager.beginTransaction().replace(R.id.placholder, new LoginFragment()).commit();
+
+                            case R.id.action_register:
+                                //TODO: manager.beginTransaction().replace(R.id.placholder, new RegisterFragment()).commit();
+
+                        }
+                        return true;
+                    }
+                });
     }
 
     private MediaRecorder recorder;
@@ -152,4 +183,11 @@ public class MainActivity extends Activity {
                 // Start conversion
                 .convert();
     }
+
+    /*public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.app_bar_action, menu);
+        return true;
+    }*/
+
 }
