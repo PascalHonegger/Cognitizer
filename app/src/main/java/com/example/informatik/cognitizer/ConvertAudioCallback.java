@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.informatik.cognitizer.Tasks.EnrollUserTask;
 import com.example.informatik.cognitizer.Tasks.EnrollUserTaskResult;
+import com.example.informatik.cognitizer.helper.ExceptionHandler;
 import com.microsoft.cognitive.speakerrecognition.SpeakerIdentificationRestClient;
 
 import java.io.File;

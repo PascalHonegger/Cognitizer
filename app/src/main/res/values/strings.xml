@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Cognitizer</string>
     <string name="speakerRecognitionKey">7d2aeed6f44f494aa49b10cc105239a7</string>
+    <string name="computerVisionKey">bc3973d5b0ba4e68817a4d3e68888ba3</string>
     <string name="start_recording">Start</string>
     <string name="stop_recording">Stop</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="analysing_image">Analysing image...</string>
 </resources>

@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.informatik.cognitizer.helper.ExceptionHandler;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -130,28 +132,6 @@ public class MainActivity extends AppCompatActivity {
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         recorder.setAudioSamplingRate(16000);
         recorder.setAudioEncodingBitRate(16000);
-
-        int storageWritePermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if(storageWritePermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    //TODO Const value
-                    24);
-            return;
-        }
-
-        int storageReadPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if(storageReadPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    //TODO Const value
-                    22);
-            return;
-        }
 
         try {
             outputFile = File.createTempFile("Cognitizer_", "mp4", getExternalCacheDir());

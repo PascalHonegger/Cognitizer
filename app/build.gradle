@@ -46,5 +46,6 @@ dependencies {
     compile "com.android.support:design:25.2.0"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.microsoft.cognitive:speakerrecognition:1.1.0'
+    compile 'com.microsoft.projectoxford:vision:1.0.374'
     compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
 }
