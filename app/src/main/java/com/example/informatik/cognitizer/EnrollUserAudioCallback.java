@@ -3,7 +3,6 @@ package com.example.informatik.cognitizer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
 import android.widget.Toast;
 
 import com.example.informatik.cognitizer.Tasks.EnrollUserTask;
@@ -39,7 +38,7 @@ public class EnrollUserAudioCallback implements IConvertCallback {
                 //TODO Username?
 
                 //Start Analyse activity
-                context.startActivity(new Intent(context, AnalyseActivity.class));
+                context.startActivity(new Intent(context, AnalyzeActivity.class));
             } else {
                 //User didn't speak long enough, no internet connection or some other error occured
                 ExceptionHandler.handleException(context, result.getException());

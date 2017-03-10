@@ -3,24 +3,21 @@ package com.example.informatik.cognitizer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
-public class AnalyseActivity extends AppCompatActivity {
+public class AnalyzeActivity extends AppCompatActivity {
 
     private android.app.FragmentManager manager = getFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_analyse);
+        setContentView(R.layout.activity_analyze);
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
@@ -29,27 +26,28 @@ public class AnalyseActivity extends AppCompatActivity {
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        selectItem(R.id.action_picture);
+                        selectItem(item.getItemId());
 
                         return true;
                     }
                 });
 
+        selectItem(R.id.action_picture);
     }
 
     private void selectItem(int id) {
-        String newTitle = "Cognitizer ";
+        String newTitle = "";
 
         switch (id) {
             case R.id.action_text:
                 manager.beginTransaction().replace(R.id.analysePlaceholder, new RecognizeTextFragment()).commit();
 
-                newTitle += "Recognize Text";
+                newTitle = "Recognize Text";
                 break;
             case R.id.action_picture:
                 manager.beginTransaction().replace(R.id.analysePlaceholder, new DescribeImageFragment()).commit();
 
-                newTitle += "Describe Image";
+                newTitle = "Describe Image";
                 break;
             default:
                 Log.w("Navigation", "Unknown tab " + id + "cannot be selected");

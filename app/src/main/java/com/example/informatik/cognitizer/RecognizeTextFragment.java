@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.informatik.cognitizer.Tasks.RecognizeTextTask;
 import com.example.informatik.cognitizer.helper.ExceptionHandler;
@@ -23,7 +23,7 @@ public class RecognizeTextFragment extends ImageUsingFragmentBase {
     private Bitmap mBitmap;
 
     // The edit to show status and result.
-    private EditText resultText;
+    private TextView resultText;
 
     private ImageView imageView;
 
@@ -46,7 +46,7 @@ public class RecognizeTextFragment extends ImageUsingFragmentBase {
 
         setupViewEvents(view);
 
-        resultText = (EditText)view.findViewById(R.id.resultText);
+        resultText = (TextView)view.findViewById(R.id.resultText);
         imageView = (ImageView)view.findViewById(R.id.selectedImage);
 
         return view;

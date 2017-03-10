@@ -9,14 +9,13 @@ import android.widget.Toast;
 
 import com.example.informatik.cognitizer.Tasks.AuthorizeUserTask;
 import com.example.informatik.cognitizer.Tasks.AuthorizeUserTaskResult;
-import com.example.informatik.cognitizer.Tasks.EnrollUserTask;
-import com.example.informatik.cognitizer.Tasks.EnrollUserTaskResult;
 import com.example.informatik.cognitizer.helper.ExceptionHandler;
 import com.example.informatik.cognitizer.helper.UserFeedbackHelper;
 import com.microsoft.cognitive.speakerrecognition.SpeakerIdentificationRestClient;
 import com.microsoft.cognitive.speakerrecognition.contract.Confidence;
 
 import java.io.File;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import cafe.adriel.androidaudioconverter.callback.IConvertCallback;
@@ -37,7 +36,7 @@ public class AuthorizeUserAudioCallback implements IConvertCallback {
             AuthorizeUserTaskResult result = task.get();
 
             if(result.isSuccess()) {
-                if(result.getConfidence() != Confidence.HIGH) {
+                if(result.getConfidence() != Confidence.HIGH || result.getUserId().equals(new UUID(0L, 0L))) {
                     UserFeedbackHelper.showWarning(context, "Login failed", "Couldn't verify you!", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -47,7 +46,6 @@ public class AuthorizeUserAudioCallback implements IConvertCallback {
                     return;
                 }
 
-
                 //User enrolled
                 //TODO Login user
                 Toast.makeText(context, result.getUserId().toString() + " - " + result.getConfidence().toString(), Toast.LENGTH_LONG).show();
@@ -55,7 +53,7 @@ public class AuthorizeUserAudioCallback implements IConvertCallback {
                 //TODO Username?
 
                 //Start Analyse activity
-                context.startActivity(new Intent(context, AnalyseActivity.class));
+                context.startActivity(new Intent(context, AnalyzeActivity.class));
             } else {
                 //User didn't speak long enough, no internet connection or some other error occured
                 ExceptionHandler.handleException(context, result.getException());

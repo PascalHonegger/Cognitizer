@@ -62,15 +62,9 @@ public class DescribeImageFragment extends ImageUsingFragmentBase {
 
         try {
             AnalysisResult result = new DescribeImageTask(client).execute(mBitmap).get();
-            String[] tags;
-            tags = new String[result.tags.size()];
-
-            for(int i = 0; i <= result.tags.size(); i++) {
-                tags[i] = result.tags.get(i).name;
-            }
 
             ArrayAdapter<String> itemsAdapter =
-                    new ArrayAdapter<String>(getContext(), android.R.layout.list_content, tags);
+                    new ArrayAdapter<String>(getContext(), android.R.layout.list_content, result.description.tags);
 
             listView.setAdapter(itemsAdapter);
 

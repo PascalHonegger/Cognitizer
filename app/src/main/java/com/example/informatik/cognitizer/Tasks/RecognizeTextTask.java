@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.microsoft.projectoxford.vision.VisionServiceClient;
 import com.microsoft.projectoxford.vision.contract.AnalysisResult;
+import com.microsoft.projectoxford.vision.contract.LanguageCodes;
 import com.microsoft.projectoxford.vision.contract.Line;
 import com.microsoft.projectoxford.vision.contract.OCR;
 import com.microsoft.projectoxford.vision.contract.Region;
@@ -31,7 +32,7 @@ public class RecognizeTextTask extends AsyncTask<Bitmap, Void, String> {
             args[0].compress(Bitmap.CompressFormat.JPEG, 100, output);
             ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
 
-            OCR analysisResult = visionServiceClient.recognizeText(inputStream, "en-US", true);
+            OCR analysisResult = visionServiceClient.recognizeText(inputStream, LanguageCodes.AutoDetect, true);
 
 
             String result = "";
