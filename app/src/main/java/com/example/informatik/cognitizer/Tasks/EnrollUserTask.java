@@ -14,8 +14,6 @@ import java.util.UUID;
 import static com.example.informatik.cognitizer.Tasks.Constants.TASK_DELAY;
 
 public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> {
-    private static UUID createUserUUID;
-
     private Exception exception;
     private SpeakerIdentificationClient speakerIdentificationClient;
 
@@ -29,23 +27,19 @@ public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> 
         EnrollUserTaskResult result;
 
         try {
-            //Create a new user if the register button is pressed for the first time
-            if(createUserUUID == null) {
-                createUserUUID = speakerIdentificationClient.createProfile("en-US").identificationProfileId;
-            }
+            UUID createUserUUID = speakerIdentificationClient.createProfile("en-US").identificationProfileId;
 
             OperationLocation enrollResult = speakerIdentificationClient.enroll(new FileInputStream(params[0]), createUserUUID, true);
 
             EnrollmentStatus enrollmentStatus = null;
-            com.microsoft.cognitive.speakerrecognition.contract.identification.Status operationStatus = com.microsoft.cognitive.speakerrecognition.contract.identification.Status.NOTSTARTED;
             do {
                 //Let Microsoft think before we retry
                 Thread.sleep(TASK_DELAY);
                 EnrollmentOperation enrollmentStatusResult = speakerIdentificationClient.checkEnrollmentStatus(enrollResult);
 
                 //Wait until Microsoft finishes analysing
-                if((operationStatus == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.SUCCEEDED
-                        || operationStatus == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.FAILED)
+                if((enrollmentStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.SUCCEEDED
+                        || enrollmentStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.FAILED)
                         && enrollmentStatusResult.processingResult != null) {
                     enrollmentStatus = enrollmentStatusResult.processingResult.enrollmentStatus;
                 }

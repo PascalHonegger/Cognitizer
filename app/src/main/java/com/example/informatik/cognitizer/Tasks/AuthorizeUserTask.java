@@ -45,8 +45,6 @@ public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskRe
             OperationLocation identifyResult = speakerIdentificationClient.identify(new FileInputStream(params[0]), allUsers, true);
 
 
-            com.microsoft.cognitive.speakerrecognition.contract.identification.Status operationStatus = com.microsoft.cognitive.speakerrecognition.contract.identification.Status.NOTSTARTED;
-
             Identification identifiedUser = null;
             do {
                 //Let Microsoft think before we retry
@@ -55,8 +53,8 @@ public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskRe
                 IdentificationOperation identificationStatusResult = speakerIdentificationClient.checkIdentificationStatus(identifyResult);
 
                 //Wait until Microsoft finishes analysing
-                if((operationStatus == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.SUCCEEDED
-                        || operationStatus == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.FAILED)
+                if((identificationStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.SUCCEEDED
+                        || identificationStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.FAILED)
                         && identificationStatusResult.processingResult != null) {
                     identifiedUser = identificationStatusResult.processingResult;
                 }

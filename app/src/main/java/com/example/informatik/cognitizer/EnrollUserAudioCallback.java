@@ -1,7 +1,9 @@
 package com.example.informatik.cognitizer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.widget.Toast;
 
 import com.example.informatik.cognitizer.Tasks.EnrollUserTask;
@@ -14,10 +16,10 @@ import java.util.concurrent.ExecutionException;
 
 import cafe.adriel.androidaudioconverter.callback.IConvertCallback;
 
-public class ConvertAudioCallback implements IConvertCallback {
+public class EnrollUserAudioCallback implements IConvertCallback {
     private final Context context;
 
-    public ConvertAudioCallback(Context context) {
+    public EnrollUserAudioCallback(Context context) {
         this.context = context;
     }
 
@@ -33,6 +35,11 @@ public class ConvertAudioCallback implements IConvertCallback {
                 //User enrolled
                 //TODO Login user
                 Toast.makeText(context, result.getEnrollmentStatus().toString(), Toast.LENGTH_LONG).show();
+
+                //TODO Username?
+
+                //Start Analyse activity
+                context.startActivity(new Intent(context, AnalyseActivity.class));
             } else {
                 //User didn't speak long enough, no internet connection or some other error occured
                 ExceptionHandler.handleException(context, result.getException());
