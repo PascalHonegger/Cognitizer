@@ -8,7 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+
+import com.example.informatik.cognitizer.helper.UserFeedbackHelper;
 
 public class AnalyzeActivity extends AppCompatActivity {
 
@@ -65,5 +68,9 @@ public class AnalyzeActivity extends AppCompatActivity {
 
     public void logout(MenuItem item) {
         finish();
+    }
+
+    public void getinfo(View view) {
+        UserFeedbackHelper.showInformation(this, "This is a tag associated with the image");
     }
 }

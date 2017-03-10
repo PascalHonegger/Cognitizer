@@ -5,4 +5,6 @@
     <string name="analysing_image">Analysing image…</string>
     <string name="title_activity_analyse">AnalyzeActivity</string>
     <string name="analyzing_voice">Analyzing Voice…</string>
+    <string name="say_my_voice_is_stronger_than_passwords_three_times">Say \'My voice is stronger than passwords\' three times</string>
+    <string name="say_my_voice_is_stronger_than_passwords">Say \'My voice is stronger than passwords\'</string>
 </resources>

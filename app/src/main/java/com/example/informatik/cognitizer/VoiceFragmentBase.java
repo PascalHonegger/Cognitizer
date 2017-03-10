@@ -23,24 +23,44 @@ public abstract class VoiceFragmentBase extends Fragment {
 
     private MediaRecorder recorder;
 
+
+    protected boolean isRecording() {
+        return recorder != null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if(isRecording()) {
+            stopAndReleaseRecorder();
+        }
+
+    }
+
+    /**
+     * Called once clicking on the round microphone button
+     * @param v View by ClickEvent
+     */
     protected void switchRecordingState(View v) {
         if(!PermissionsHelper.checkAndGetPermissions(getActivity())) {
             return;
         }
 
         FloatingActionButton fab = (FloatingActionButton) v;
-        if(recorder == null) {
-            fab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.mic_activate));
-            startRecording();
-        } else {
+        if(isRecording()) {
             fab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.mic_deactivate));
             stopRecording();
+        } else {
+            fab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.mic_activate));
+            startRecording();
         }
     }
 
     private void startRecording() {
         recorder = new MediaRecorder();
 
+        //Set up media recorder
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
@@ -48,10 +68,12 @@ public abstract class VoiceFragmentBase extends Fragment {
         recorder.setAudioEncodingBitRate(16000);
 
         try {
+            //Save audio in temporary file
             outputFile = File.createTempFile("Cognitizer_", "mp4", getContext().getExternalCacheDir());
 
             recorder.setOutputFile(outputFile.getPath());
 
+            //Start recording
             recorder.prepare();
             recorder.start();
         } catch (IOException e) {
@@ -60,10 +82,9 @@ public abstract class VoiceFragmentBase extends Fragment {
     }
 
     private void stopRecording() {
-        recorder.stop();
-        recorder.release();
-        recorder = null;
+        stopAndReleaseRecorder();
 
+        //Show progress to user
         ProgressDialog dialog = UserFeedbackHelper.showProgress(getContext(), getString(R.string.analyzing_voice));
 
         AndroidAudioConverter.with(getContext())
@@ -78,6 +99,15 @@ public abstract class VoiceFragmentBase extends Fragment {
 
                 // Start conversion
                 .convert();
+    }
+
+    /**
+     * Stop recording and free up microphone
+     */
+    private void stopAndReleaseRecorder() {
+        recorder.stop();
+        recorder.release();
+        recorder = null;
     }
 
     protected abstract IConvertCallback getConvertCallback(Context context, ProgressDialog dialog);
