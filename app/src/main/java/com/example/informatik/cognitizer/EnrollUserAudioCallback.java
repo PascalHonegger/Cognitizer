@@ -32,10 +32,7 @@ public class EnrollUserAudioCallback implements IConvertCallback {
                 dialog.dismiss();
                 if (result.isSuccess()) {
                     //User enrolled
-                    //TODO Login user
                     Toast.makeText(context, result.getEnrollmentStatus().toString(), Toast.LENGTH_LONG).show();
-
-                    //TODO Username?
 
                     //Start Analyse activity
                     context.startActivity(new Intent(context, AnalyzeActivity.class));

@@ -49,10 +49,7 @@ public class AuthorizeUserAudioCallback implements IConvertCallback {
                     }
 
                     //User enrolled
-                    //TODO Login user
                     Toast.makeText(context, result.getUserId().toString() + " - " + result.getConfidence().toString(), Toast.LENGTH_LONG).show();
-
-                    //TODO Username?
 
                     //Start Analyse activity
                     context.startActivity(new Intent(context, AnalyzeActivity.class));

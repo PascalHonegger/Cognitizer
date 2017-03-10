@@ -33,7 +33,6 @@ public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskRe
         AuthorizeUserTaskResult result;
 
         try {
-            //TODO Save users locally?
             List<Profile> profiles = speakerIdentificationClient.getProfiles();
 
             List<UUID> allUsers = new ArrayList<>();
