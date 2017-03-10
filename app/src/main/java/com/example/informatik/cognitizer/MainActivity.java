@@ -18,9 +18,6 @@ import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
 import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
 
 public class MainActivity extends AppCompatActivity {
-
-    private File outputFile;
-    private BottomNavigationView bottomNavigationView;
     private android.app.FragmentManager manager = getFragmentManager();
 
     @Override
@@ -48,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         try {
             bottomNavigationView.setOnNavigationItemSelectedListener(
                     new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -91,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        //TODO FIX: ((TextView)bottomNavigationView.findViewById(R.id.appBarTitle)).setText(newTitle);
         ((TextView)findViewById(R.id.appBarTitle)).setText(newTitle);
     }
 }

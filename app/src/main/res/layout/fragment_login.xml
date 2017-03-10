@@ -22,5 +22,6 @@
         android:layout_height="wrap_content"
         android:text="Say 'My voice is stronger than passwords'"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="25dp"
+        android:textColor="@android:color/black"/>
 </LinearLayout>
