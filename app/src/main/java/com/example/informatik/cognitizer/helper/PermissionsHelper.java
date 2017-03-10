@@ -11,15 +11,17 @@ import java.util.List;
 
 public class PermissionsHelper {
 
-    private PermissionsHelper() {}
+    private PermissionsHelper() {
+    }
 
     private static final int permissionRequestId = 42;
 
     /**
      * Checks wheter all required Permissions are set. If not, requests them and returns false.
+     *
      * @return True if all permissions are received
      */
-    public static  boolean checkAndGetPermissions(Activity activity) {
+    public static boolean checkAndGetPermissions(Activity activity) {
 
         List<String> missingPermissions = new ArrayList<>();
 
@@ -29,7 +31,7 @@ public class PermissionsHelper {
         addPermissionIfNotGranted(activity, missingPermissions, Manifest.permission.CAMERA);
         addPermissionIfNotGranted(activity, missingPermissions, Manifest.permission.RECORD_AUDIO);
 
-        if(missingPermissions.size() > 0) {
+        if (missingPermissions.size() > 0) {
             String[] permissionsToRequest = new String[missingPermissions.size()];
 
             for (int i = 0; i < missingPermissions.size(); i++) {
@@ -44,7 +46,7 @@ public class PermissionsHelper {
     }
 
     private static void addPermissionIfNotGranted(Context context, List<String> missingPermissions, String permission) {
-        if(ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
             missingPermissions.add(permission);
         }
     }

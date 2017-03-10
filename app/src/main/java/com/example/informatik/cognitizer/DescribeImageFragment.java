@@ -41,7 +41,7 @@ public class DescribeImageFragment extends ImageUsingFragmentBase {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (client==null){
+        if (client == null) {
             client = new VisionServiceRestClient(getString(R.string.computerVisionKey));
         }
     }
@@ -54,9 +54,9 @@ public class DescribeImageFragment extends ImageUsingFragmentBase {
 
         setupViewEvents(view);
 
-        listView = (ListView)view.findViewById(R.id.tagResultList);
+        listView = (ListView) view.findViewById(R.id.tagResultList);
         descriptionBox = (TextView) view.findViewById(R.id.imageDescription);
-        imageView = (ImageView)view.findViewById(R.id.selectedImage);
+        imageView = (ImageView) view.findViewById(R.id.selectedImage);
 
         return view;
     }

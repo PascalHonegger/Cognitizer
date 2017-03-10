@@ -7,10 +7,12 @@ import android.content.DialogInterface;
 import android.widget.Toast;
 
 public class UserFeedbackHelper {
-    private UserFeedbackHelper() {}
+    private UserFeedbackHelper() {
+    }
 
     /**
      * shows a error message to the user
+     *
      * @param context context for user feedback
      * @param message massage to display
      */
@@ -20,9 +22,10 @@ public class UserFeedbackHelper {
 
     /**
      * shows a warning message to the user
-     * @param context context for user feedback
-     * @param title titel of warning
-     * @param message message of warning
+     *
+     * @param context         context for user feedback
+     * @param title           titel of warning
+     * @param message         message of warning
      * @param okClickListener listener for the ok button
      */
     public static void showWarning(Context context, String title, String message, DialogInterface.OnClickListener okClickListener) {
@@ -33,6 +36,7 @@ public class UserFeedbackHelper {
 
     /**
      * shows a information message to the user
+     *
      * @param context context for user feedback
      * @param message information message
      */
@@ -42,8 +46,9 @@ public class UserFeedbackHelper {
 
     /**
      * displays a progress indicator
+     *
      * @param context context for user feedback
-     * @param title titel of the progression
+     * @param title   titel of the progression
      * @return
      */
     public static ProgressDialog showProgress(Context context, String title) {

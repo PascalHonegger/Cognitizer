@@ -35,8 +35,8 @@ public class AuthorizeUserAudioCallback implements IConvertCallback {
             @Override
             public void onSuccess(AuthorizeUserTaskResult result) {
                 dialog.dismiss();
-                if(result.isSuccess()) {
-                    if(result.getConfidence() != Confidence.HIGH || result.getUserId().equals(new UUID(0L, 0L))) {
+                if (result.isSuccess()) {
+                    if (result.getConfidence() != Confidence.HIGH || result.getUserId().equals(new UUID(0L, 0L))) {
                         UserFeedbackHelper.showWarning(context, "Login failed", "Couldn't verify you!", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

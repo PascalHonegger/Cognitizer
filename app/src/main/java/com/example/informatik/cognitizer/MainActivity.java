@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //check permissions
-        if(!PermissionsHelper.checkAndGetPermissions(this)) {
+        if (!PermissionsHelper.checkAndGetPermissions(this)) {
             Toast.makeText(this, "Permissions are required for this app to function properly!", Toast.LENGTH_LONG).show();
         }
 
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess() {
                 // Great!
             }
+
             @Override
             public void onFailure(Exception e) {
                 ExceptionHandler.handleException(context, e);
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * navigate to an other View
+     *
      * @param id id of the menue item
      */
     private void selectItem(int id) {
@@ -94,6 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        ((TextView)findViewById(R.id.appBarTitle)).setText(newTitle);
+        ((TextView) findViewById(R.id.appBarTitle)).setText(newTitle);
     }
 }

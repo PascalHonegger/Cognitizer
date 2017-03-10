@@ -25,8 +25,7 @@ public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskRe
     private SpeakerIdentificationClient speakerIdentificationClient;
     private PostExecuteCallback callback;
 
-    public AuthorizeUserTask(SpeakerIdentificationClient speakerIdentificationClient, PostExecuteCallback callback)
-    {
+    public AuthorizeUserTask(SpeakerIdentificationClient speakerIdentificationClient, PostExecuteCallback callback) {
         this.speakerIdentificationClient = speakerIdentificationClient;
         this.callback = callback;
     }
@@ -55,13 +54,13 @@ public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskRe
                 IdentificationOperation identificationStatusResult = speakerIdentificationClient.checkIdentificationStatus(identifyResult);
 
                 //Wait until Microsoft finishes analysing
-                if((identificationStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.SUCCEEDED
+                if ((identificationStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.SUCCEEDED
                         || identificationStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.FAILED)
                         && identificationStatusResult.processingResult != null) {
                     identifiedUser = identificationStatusResult.processingResult;
                 }
 
-            }while(identifiedUser == null);
+            } while (identifiedUser == null);
 
             result = new AuthorizeUserTaskResult(identifiedUser.identifiedProfileId, identifiedUser.confidence);
         } catch (Exception e) {
@@ -77,7 +76,7 @@ public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskRe
      * @param result
      */
     protected void onPostExecute(AuthorizeUserTaskResult result) {
-        if(exception != null) {
+        if (exception != null) {
             callback.onError(exception);
         } else {
             try {
@@ -90,6 +89,7 @@ public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskRe
 
     public interface PostExecuteCallback {
         void onSuccess(AuthorizeUserTaskResult result);
+
         void onError(Exception e);
     }
 }

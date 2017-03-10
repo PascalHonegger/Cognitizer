@@ -48,7 +48,7 @@ public class DescribeImageTask extends AsyncTask<Bitmap, Void, AnalysisResult> {
     @Override
     protected void onPostExecute(AnalysisResult data) {
         super.onPostExecute(data);
-        if(exception != null) {
+        if (exception != null) {
             callback.onError(exception);
         } else {
             try {
@@ -61,6 +61,7 @@ public class DescribeImageTask extends AsyncTask<Bitmap, Void, AnalysisResult> {
 
     public interface PostExecuteCallback {
         void onSuccess(AnalysisResult result);
+
         void onError(Exception e);
     }
 }

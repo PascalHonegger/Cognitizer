@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    tools:context="com.example.informatik.cognitizer.RegisterFragment"
+<LinearLayout tools:context="com.example.informatik.cognitizer.RegisterFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,13 +15,14 @@
         android:onClick="switchRecordingState"
         android:src="@drawable/mic_deactivate"
         android:tint="@android:color/white"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/say_my_voice_is_stronger_than_passwords_three_times"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black" />
 
 </LinearLayout>

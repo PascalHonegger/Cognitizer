@@ -17,8 +17,7 @@
         android:textColor="@android:color/black"
         android:textSize="20dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
-        />
+        android:layout_marginTop="6dp" />
 
     <TextView
         android:id="@+id/resultText"
@@ -31,6 +30,6 @@
         android:textSize="15sp"
         android:layout_marginBottom="6dp"
         android:scrollbars="vertical"
-        android:textIsSelectable="true"/>
+        android:textIsSelectable="true" />
 
 </LinearLayout>

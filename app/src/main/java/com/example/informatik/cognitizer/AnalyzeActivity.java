@@ -57,7 +57,7 @@ public class AnalyzeActivity extends AppCompatActivity {
                 break;
         }
 
-        ((TextView)findViewById(R.id.appBarTitle)).setText(newTitle);
+        ((TextView) findViewById(R.id.appBarTitle)).setText(newTitle);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

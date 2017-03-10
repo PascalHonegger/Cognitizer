@@ -62,7 +62,7 @@ public class RecognizeTextTask extends AsyncTask<Bitmap, Void, String> {
     }
 
     protected void onPostExecute(String result) {
-        if(exception != null) {
+        if (exception != null) {
             callback.onError(exception);
         } else {
             try {
@@ -75,6 +75,7 @@ public class RecognizeTextTask extends AsyncTask<Bitmap, Void, String> {
 
     public interface PostExecuteCallback {
         void onSuccess(String result);
+
         void onError(Exception e);
     }
 }

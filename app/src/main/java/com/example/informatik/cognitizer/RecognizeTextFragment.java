@@ -33,7 +33,7 @@ public class RecognizeTextFragment extends ImageUsingFragmentBase {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (client==null){
+        if (client == null) {
             client = new VisionServiceRestClient(getString(R.string.computerVisionKey));
         }
     }
@@ -46,8 +46,8 @@ public class RecognizeTextFragment extends ImageUsingFragmentBase {
 
         setupViewEvents(view);
 
-        resultText = (TextView)view.findViewById(R.id.resultText);
-        imageView = (ImageView)view.findViewById(R.id.selectedImage);
+        resultText = (TextView) view.findViewById(R.id.resultText);
+        imageView = (ImageView) view.findViewById(R.id.selectedImage);
 
         return view;
     }

@@ -24,8 +24,7 @@ public abstract class ImageUsingFragmentBase extends Fragment {
     // Deal with the result of selection of the photos and faces.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case REQUEST_TAKE_PHOTO:
             case REQUEST_SELECT_IMAGE_IN_ALBUM:
                 if (resultCode == RESULT_OK) {
@@ -42,7 +41,7 @@ public abstract class ImageUsingFragmentBase extends Fragment {
     // When the button of "Take a Photo with Camera" is pressed.
     public void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(intent.resolveActivity(getContext().getPackageManager()) != null) {
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             // Save the photo taken to a temporary file.
             File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             try {
@@ -67,6 +66,7 @@ public abstract class ImageUsingFragmentBase extends Fragment {
 
     /**
      * set event listener for camara and file-picker buttons
+     *
      * @param view current view
      */
     protected void setupViewEvents(View view) {

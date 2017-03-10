@@ -4,7 +4,7 @@ package com.example.informatik.cognitizer;
 public class Tag {
     public String name; //name of the tag
 
-    public Tag(String name){
+    public Tag(String name) {
         this.name = name;
     }
 }

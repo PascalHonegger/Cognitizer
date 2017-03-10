@@ -57,13 +57,13 @@ public class ImageHelper {
             imageInputStream = contentResolver.openInputStream(imageUri);
             Bitmap bitmap = BitmapFactory.decodeStream(imageInputStream, outPadding, options);
             maxSideLength = bitmap.getWidth() > bitmap.getHeight()
-                    ? bitmap.getWidth(): bitmap.getHeight();
+                    ? bitmap.getWidth() : bitmap.getHeight();
             double ratio = IMAGE_MAX_SIDE_LENGTH / (double) maxSideLength;
             if (ratio < 1) {
                 bitmap = Bitmap.createScaledBitmap(
                         bitmap,
-                        (int)(bitmap.getWidth() * ratio),
-                        (int)(bitmap.getHeight() * ratio),
+                        (int) (bitmap.getWidth() * ratio),
+                        (int) (bitmap.getHeight() * ratio),
                         false);
             }
 
@@ -91,7 +91,7 @@ public class ImageHelper {
             Uri imageUri, ContentResolver contentResolver) throws IOException {
         int angle = 0;
         Cursor cursor = contentResolver.query(imageUri,
-                new String[] { MediaStore.Images.ImageColumns.ORIENTATION }, null, null, null);
+                new String[]{MediaStore.Images.ImageColumns.ORIENTATION}, null, null, null);
         if (cursor != null) {
             if (cursor.getCount() == 1) {
                 cursor.moveToFirst();

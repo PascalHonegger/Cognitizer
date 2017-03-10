@@ -22,8 +22,7 @@ public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> 
     private SpeakerIdentificationClient speakerIdentificationClient;
     private PostExecuteCallback callback;
 
-    public EnrollUserTask(SpeakerIdentificationClient speakerIdentificationClient, PostExecuteCallback callback)
-    {
+    public EnrollUserTask(SpeakerIdentificationClient speakerIdentificationClient, PostExecuteCallback callback) {
         this.speakerIdentificationClient = speakerIdentificationClient;
         this.callback = callback;
     }
@@ -44,12 +43,12 @@ public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> 
                 EnrollmentOperation enrollmentStatusResult = speakerIdentificationClient.checkEnrollmentStatus(enrollResult);
 
                 //Wait until Microsoft finishes analysing
-                if((enrollmentStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.SUCCEEDED
+                if ((enrollmentStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.SUCCEEDED
                         || enrollmentStatusResult.status == com.microsoft.cognitive.speakerrecognition.contract.identification.Status.FAILED)
                         && enrollmentStatusResult.processingResult != null) {
                     enrollmentStatus = enrollmentStatusResult.processingResult.enrollmentStatus;
                 }
-            }while(enrollmentStatus == null);
+            } while (enrollmentStatus == null);
 
             result = new EnrollUserTaskResult(enrollmentStatus);
         } catch (Exception e) {
@@ -62,7 +61,7 @@ public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> 
     }
 
     protected void onPostExecute(EnrollUserTaskResult result) {
-        if(exception != null) {
+        if (exception != null) {
             callback.onError(exception);
         } else {
             try {
@@ -75,6 +74,7 @@ public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> 
 
     public interface PostExecuteCallback {
         void onSuccess(EnrollUserTaskResult result);
+
         void onError(Exception e);
     }
 }

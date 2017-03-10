@@ -32,7 +32,7 @@ public abstract class VoiceFragmentBase extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        if(isRecording()) {
+        if (isRecording()) {
             stopAndReleaseRecorder();
         }
 
@@ -40,15 +40,16 @@ public abstract class VoiceFragmentBase extends Fragment {
 
     /**
      * Called once clicking on the round microphone button
+     *
      * @param v View by ClickEvent
      */
     protected void switchRecordingState(View v) {
-        if(!PermissionsHelper.checkAndGetPermissions(getActivity())) {
+        if (!PermissionsHelper.checkAndGetPermissions(getActivity())) {
             return;
         }
 
         FloatingActionButton fab = (FloatingActionButton) v;
-        if(isRecording()) {
+        if (isRecording()) {
             fab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.mic_deactivate));
             stopRecording();
         } else {
