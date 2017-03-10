@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/darker_gray"
+    android:layout_marginTop="1dp">
 
     <ImageView
         android:id="@+id/icon"
@@ -15,14 +16,14 @@
         android:layout_alignParentLeft="true"/>
 
     <TextView
-        android:id="@+id/secondLine"
+        android:id="@+id/tag_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/icon"
         android:text="Tag"
         android:textSize="30dp"
         android:gravity="center_vertical|left"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="6dp"
         android:textColor="@android:color/black" />
 
     <ImageView
@@ -30,10 +31,10 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:src="@drawable/info"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="6dp"
         android:tint="@android:color/black"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="6dp" />
 
 
 

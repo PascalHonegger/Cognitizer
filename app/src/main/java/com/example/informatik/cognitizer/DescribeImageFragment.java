@@ -21,6 +21,8 @@ import com.microsoft.projectoxford.vision.VisionServiceClient;
 import com.microsoft.projectoxford.vision.VisionServiceRestClient;
 import com.microsoft.projectoxford.vision.contract.AnalysisResult;
 
+import java.util.ArrayList;
+
 import static android.R.id.list;
 
 
@@ -63,10 +65,12 @@ public class DescribeImageFragment extends ImageUsingFragmentBase {
         try {
             AnalysisResult result = new DescribeImageTask(client).execute(mBitmap).get();
 
-            ArrayAdapter<String> itemsAdapter =
-                    new ArrayAdapter<String>(getContext(), android.R.layout.list_content, result.description.tags);
-
-            listView.setAdapter(itemsAdapter);
+            // Construct the data source
+            ArrayList<Tag> arrayOfUsers = new ArrayList<Tag>();
+            // Create the adapter to convert the array to views
+            CustomAdapter adapter = new CustomAdapter(getContext(), arrayOfUsers);
+            // Attach the adapter to a ListView
+            listView.setAdapter(adapter);
 
             //TODO display result
         } catch (Exception e) {
