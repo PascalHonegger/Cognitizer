@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -19,6 +20,8 @@ import com.example.informatik.cognitizer.helper.UserFeedbackHelper;
 import com.microsoft.projectoxford.vision.VisionServiceClient;
 import com.microsoft.projectoxford.vision.VisionServiceRestClient;
 import com.microsoft.projectoxford.vision.contract.AnalysisResult;
+
+import static android.R.id.list;
 
 
 public class DescribeImageFragment extends ImageUsingFragmentBase {
@@ -59,6 +62,17 @@ public class DescribeImageFragment extends ImageUsingFragmentBase {
 
         try {
             AnalysisResult result = new DescribeImageTask(client).execute(mBitmap).get();
+            String[] tags;
+            tags = new String[result.tags.size()];
+
+            for(int i = 0; i <= result.tags.size(); i++) {
+                tags[i] = result.tags.get(i).name;
+            }
+
+            ArrayAdapter<String> itemsAdapter =
+                    new ArrayAdapter<String>(getContext(), android.R.layout.list_content, tags);
+
+            listView.setAdapter(itemsAdapter);
 
             //TODO display result
         } catch (Exception e) {

@@ -18,6 +18,8 @@ import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
 import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
 
 public class MainActivity extends AppCompatActivity {
+
+    private File outputFile;
     private BottomNavigationView bottomNavigationView;
     private android.app.FragmentManager manager = getFragmentManager();
 
