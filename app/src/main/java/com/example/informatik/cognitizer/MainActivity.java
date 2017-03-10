@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //check permissions
         if(!PermissionsHelper.checkAndGetPermissions(this)) {
             Toast.makeText(this, "Permissions are required for this app to function properly!", Toast.LENGTH_LONG).show();
         }
@@ -69,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * navigate to an other View
+     * @param id id of the menue item
+     */
     private void selectItem(int id) {
         String newTitle = "Cognitizer ";
 

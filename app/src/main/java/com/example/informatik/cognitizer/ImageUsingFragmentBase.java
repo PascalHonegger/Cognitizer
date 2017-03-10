@@ -65,6 +65,10 @@ public abstract class ImageUsingFragmentBase extends Fragment {
         }
     }
 
+    /**
+     * set event listener for camara and file-picker buttons
+     * @param view current view
+     */
     protected void setupViewEvents(View view) {
         view.findViewById(R.id.cameraPicker).setOnClickListener(new View.OnClickListener() {
             @Override
