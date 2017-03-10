@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,7 +16,6 @@ import com.microsoft.cognitive.speakerrecognition.contract.Confidence;
 
 import java.io.File;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 import cafe.adriel.androidaudioconverter.callback.IConvertCallback;
 

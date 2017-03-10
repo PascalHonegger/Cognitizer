@@ -1,33 +1,15 @@
 package com.example.informatik.cognitizer.Tasks;
 
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.microsoft.cognitive.speakerrecognition.SpeakerIdentificationClient;
-import com.microsoft.cognitive.speakerrecognition.contract.identification.Identification;
-import com.microsoft.cognitive.speakerrecognition.contract.identification.IdentificationOperation;
-import com.microsoft.cognitive.speakerrecognition.contract.identification.OperationLocation;
-import com.microsoft.cognitive.speakerrecognition.contract.identification.Profile;
 import com.microsoft.projectoxford.vision.VisionServiceClient;
 import com.microsoft.projectoxford.vision.contract.AnalysisResult;
-import com.microsoft.projectoxford.vision.contract.Category;
-import com.microsoft.projectoxford.vision.contract.Face;
-import com.microsoft.projectoxford.vision.rest.VisionServiceException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-
-import static com.example.informatik.cognitizer.Tasks.Constants.TASK_DELAY;
 
 public class DescribeImageTask extends AsyncTask<Bitmap, Void, AnalysisResult> {
     // Store error message
