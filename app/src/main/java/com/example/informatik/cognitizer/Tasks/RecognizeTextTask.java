@@ -15,6 +15,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * A Task which tries to recognize text on an image. Calls the {@link VisionServiceClient}.recognizeText and uses a callback to inform you once the analyzation finished
+ */
 public class RecognizeTextTask extends AsyncTask<Bitmap, Void, String> {
     // Store error message
     private Exception exception = null;

@@ -11,6 +11,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * A Task which tries describe an image. Calls the {@link VisionServiceClient}.describe and uses a callback to inform you once the analyzation finished
+ */
 public class DescribeImageTask extends AsyncTask<Bitmap, Void, AnalysisResult> {
     // Store error message
     private Exception exception = null;

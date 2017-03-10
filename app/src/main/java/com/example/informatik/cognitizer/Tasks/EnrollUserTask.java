@@ -14,6 +14,9 @@ import java.util.concurrent.ExecutionException;
 
 import static com.example.informatik.cognitizer.Tasks.Constants.TASK_DELAY;
 
+/**
+ * A Task which tries to enroll a new user using his voice. Calls the {@link SpeakerIdentificationClient}.enroll and uses a callback to inform you once the identification finished
+ */
 public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> {
     private Exception exception;
     private SpeakerIdentificationClient speakerIdentificationClient;
