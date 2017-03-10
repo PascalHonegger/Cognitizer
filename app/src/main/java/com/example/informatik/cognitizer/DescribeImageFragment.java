@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.informatik.cognitizer.Tasks.DescribeImageTask;
 import com.example.informatik.cognitizer.helper.ExceptionHandler;
@@ -20,6 +21,7 @@ import com.example.informatik.cognitizer.helper.UserFeedbackHelper;
 import com.microsoft.projectoxford.vision.VisionServiceClient;
 import com.microsoft.projectoxford.vision.VisionServiceRestClient;
 import com.microsoft.projectoxford.vision.contract.AnalysisResult;
+import com.microsoft.projectoxford.vision.contract.Caption;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,8 @@ public class DescribeImageFragment extends ImageUsingFragmentBase {
 
     // The edit to show status and result.
     private ListView listView;
+
+    private TextView descriptionBox;
 
     private ImageView imageView;
 
@@ -54,30 +58,42 @@ public class DescribeImageFragment extends ImageUsingFragmentBase {
         setupViewEvents(view);
 
         listView = (ListView)view.findViewById(R.id.tagResultList);
+        descriptionBox = (TextView) view.findViewById(R.id.imageDescription);
         imageView = (ImageView)view.findViewById(R.id.selectedImage);
 
         return view;
     }
 
     public void doAnalyze() {
-        ProgressDialog dialog = UserFeedbackHelper.showProgress(getContext(), getString(R.string.analysing_image));
+        final ProgressDialog dialog = UserFeedbackHelper.showProgress(getContext(), getString(R.string.analysing_image));
 
-        try {
-            AnalysisResult result = new DescribeImageTask(client).execute(mBitmap).get();
+        new DescribeImageTask(client, new DescribeImageTask.PostExecuteCallback() {
+            @Override
+            public void onSuccess(AnalysisResult result) {
+                dialog.dismiss();
+                // Construct the data source
+                ArrayList<Tag> arrayOfTags = new ArrayList<>();
 
-            // Construct the data source
-            ArrayList<Tag> arrayOfUsers = new ArrayList<Tag>();
-            // Create the adapter to convert the array to views
-            CustomAdapter adapter = new CustomAdapter(getContext(), arrayOfUsers);
-            // Attach the adapter to a ListView
-            listView.setAdapter(adapter);
+                for (String tag : result.description.tags) {
+                    arrayOfTags.add(new Tag(tag));
+                }
 
-            //TODO display result
-        } catch (Exception e) {
-            ExceptionHandler.handleException(getContext(), e);
-        } finally {
-            dialog.dismiss();
-        }
+                // Create the adapter to convert the array to views
+                CustomAdapter adapter = new CustomAdapter(getContext(), arrayOfTags);
+                // Attach the adapter to a ListView
+                listView.setAdapter(adapter);
+
+                Caption thisCaption = result.description.captions.get(0);
+
+                descriptionBox.setText(thisCaption.text + " with confidence of " + thisCaption.confidence * 100 + "%");
+            }
+
+            @Override
+            public void onError(Exception e) {
+                dialog.dismiss();
+                ExceptionHandler.handleException(getContext(), e);
+            }
+        }).execute(mBitmap);
     }
 
     // Called when image selection is done.

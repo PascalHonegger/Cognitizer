@@ -1,5 +1,6 @@
 package com.example.informatik.cognitizer;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,49 +23,56 @@ import cafe.adriel.androidaudioconverter.callback.IConvertCallback;
 
 public class AuthorizeUserAudioCallback implements IConvertCallback {
     private final Context context;
+    private ProgressDialog dialog;
 
-    public AuthorizeUserAudioCallback(Context context) {
+    public AuthorizeUserAudioCallback(Context context, ProgressDialog dialog) {
         this.context = context;
+        this.dialog = dialog;
     }
 
     @Override
     public void onSuccess(File convertedFile) {
-        try {
-            //Send audio in correct format to Microsoft API
-            AsyncTask<File, Void, AuthorizeUserTaskResult> task = new AuthorizeUserTask(new SpeakerIdentificationRestClient(context.getString(R.string.speakerRecognitionKey))).execute(convertedFile);
+        //Send audio in correct format to Microsoft API
+        new AuthorizeUserTask(new SpeakerIdentificationRestClient(context.getString(R.string.speakerRecognitionKey)), new AuthorizeUserTask.PostExecuteCallback() {
+            @Override
+            public void onSuccess(AuthorizeUserTaskResult result) {
+                dialog.dismiss();
+                if(result.isSuccess()) {
+                    if(result.getConfidence() != Confidence.HIGH || result.getUserId().equals(new UUID(0L, 0L))) {
+                        UserFeedbackHelper.showWarning(context, "Login failed", "Couldn't verify you!", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.i("Button clicked", "OK - Login failed");
+                            }
+                        });
+                        return;
+                    }
 
-            AuthorizeUserTaskResult result = task.get();
+                    //User enrolled
+                    //TODO Login user
+                    Toast.makeText(context, result.getUserId().toString() + " - " + result.getConfidence().toString(), Toast.LENGTH_LONG).show();
 
-            if(result.isSuccess()) {
-                if(result.getConfidence() != Confidence.HIGH || result.getUserId().equals(new UUID(0L, 0L))) {
-                    UserFeedbackHelper.showWarning(context, "Login failed", "Couldn't verify you!", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Log.i("Button clicked", "OK - Login failed");
-                        }
-                    });
-                    return;
+                    //TODO Username?
+
+                    //Start Analyse activity
+                    context.startActivity(new Intent(context, AnalyzeActivity.class));
+                } else {
+                    //User didn't speak long enough, no internet connection or some other error occured
+                    ExceptionHandler.handleException(context, result.getException());
                 }
-
-                //User enrolled
-                //TODO Login user
-                Toast.makeText(context, result.getUserId().toString() + " - " + result.getConfidence().toString(), Toast.LENGTH_LONG).show();
-
-                //TODO Username?
-
-                //Start Analyse activity
-                context.startActivity(new Intent(context, AnalyzeActivity.class));
-            } else {
-                //User didn't speak long enough, no internet connection or some other error occured
-                ExceptionHandler.handleException(context, result.getException());
             }
-        } catch (InterruptedException | ExecutionException e) {
-            ExceptionHandler.handleException(context, e);
-        }
+
+            @Override
+            public void onError(Exception e) {
+                dialog.dismiss();
+                ExceptionHandler.handleException(context, e);
+            }
+        }).execute(convertedFile);
     }
 
     @Override
     public void onFailure(Exception error) {
+        dialog.dismiss();
         ExceptionHandler.handleException(context, error);
     }
 }

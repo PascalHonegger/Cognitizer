@@ -1,6 +1,7 @@
 package com.example.informatik.cognitizer;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.MediaRecorder;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.view.View;
 
 import com.example.informatik.cognitizer.helper.ExceptionHandler;
 import com.example.informatik.cognitizer.helper.PermissionsHelper;
+import com.example.informatik.cognitizer.helper.UserFeedbackHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,6 +64,8 @@ public abstract class VoiceFragmentBase extends Fragment {
         recorder.release();
         recorder = null;
 
+        ProgressDialog dialog = UserFeedbackHelper.showProgress(getContext(), getString(R.string.analyzing_voice));
+
         AndroidAudioConverter.with(getContext())
                 // Your current audio file
                 .setFile(outputFile)
@@ -70,11 +74,11 @@ public abstract class VoiceFragmentBase extends Fragment {
                 .setFormat(cafe.adriel.androidaudioconverter.model.AudioFormat.WAV)
 
                 // An callback to know when conversion is finished
-                .setCallback(getConvertCallback(getContext()))
+                .setCallback(getConvertCallback(getContext(), dialog))
 
                 // Start conversion
                 .convert();
     }
 
-    protected abstract IConvertCallback getConvertCallback(Context context);
+    protected abstract IConvertCallback getConvertCallback(Context context, ProgressDialog dialog);
 }

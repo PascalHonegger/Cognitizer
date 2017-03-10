@@ -1,5 +1,6 @@
 package com.example.informatik.cognitizer;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ public class LoginFragment extends VoiceFragmentBase {
     }
 
     @Override
-    protected IConvertCallback getConvertCallback(Context context) {
-        return new AuthorizeUserAudioCallback(context);
+    protected IConvertCallback getConvertCallback(Context context, ProgressDialog dialog) {
+        return new AuthorizeUserAudioCallback(context, dialog);
     }
 }

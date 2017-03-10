@@ -25,16 +25,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import static com.example.informatik.cognitizer.Tasks.Constants.TASK_DELAY;
 
 public class DescribeImageTask extends AsyncTask<Bitmap, Void, AnalysisResult> {
     // Store error message
-    private Exception e = null;
+    private Exception exception = null;
     private VisionServiceClient visionServiceClient;
+    private PostExecuteCallback callback;
 
-    public DescribeImageTask(VisionServiceClient visionServiceClient) {
+    public DescribeImageTask(VisionServiceClient visionServiceClient, PostExecuteCallback callback) {
         this.visionServiceClient = visionServiceClient;
+        this.callback = callback;
     }
 
     @Override
@@ -47,11 +50,11 @@ public class DescribeImageTask extends AsyncTask<Bitmap, Void, AnalysisResult> {
 
             AnalysisResult analysisResult = visionServiceClient.describe(inputStream, 1);
 
-            Log.d("result", analysisResult.description.captions.get(0).text);
+            Log.i("result", analysisResult.description.captions.get(0).text);
 
             return analysisResult;
         } catch (Exception e) {
-            this.e = e;    // Store error
+            this.exception = e;    // Store error
         }
 
         return null;
@@ -60,9 +63,19 @@ public class DescribeImageTask extends AsyncTask<Bitmap, Void, AnalysisResult> {
     @Override
     protected void onPostExecute(AnalysisResult data) {
         super.onPostExecute(data);
-        if (e != null) {
-            //TODO Exception handler?
-            e.printStackTrace();
+        if(exception != null) {
+            callback.onError(exception);
+        } else {
+            try {
+                callback.onSuccess(get());
+            } catch (InterruptedException | ExecutionException e) {
+                callback.onError(e);
+            }
         }
+    }
+
+    public interface PostExecuteCallback {
+        void onSuccess(AnalysisResult result);
+        void onError(Exception e);
     }
 }

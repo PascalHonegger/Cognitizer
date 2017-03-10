@@ -10,16 +10,19 @@ import com.microsoft.cognitive.speakerrecognition.contract.identification.Operat
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import static com.example.informatik.cognitizer.Tasks.Constants.TASK_DELAY;
 
 public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> {
     private Exception exception;
     private SpeakerIdentificationClient speakerIdentificationClient;
+    private PostExecuteCallback callback;
 
-    public EnrollUserTask(SpeakerIdentificationClient speakerIdentificationClient)
+    public EnrollUserTask(SpeakerIdentificationClient speakerIdentificationClient, PostExecuteCallback callback)
     {
         this.speakerIdentificationClient = speakerIdentificationClient;
+        this.callback = callback;
     }
 
     @Override
@@ -56,11 +59,19 @@ public class EnrollUserTask extends AsyncTask<File, Void, EnrollUserTaskResult> 
     }
 
     protected void onPostExecute(EnrollUserTaskResult result) {
-        // TODO: check this.exception
-        // TODO: do something with the feed
         if(exception != null) {
-            //TODO Exception-Handler?
-            exception.printStackTrace();
+            callback.onError(exception);
+        } else {
+            try {
+                callback.onSuccess(get());
+            } catch (InterruptedException | ExecutionException e) {
+                callback.onError(e);
+            }
         }
+    }
+
+    public interface PostExecuteCallback {
+        void onSuccess(EnrollUserTaskResult result);
+        void onError(Exception e);
     }
 }

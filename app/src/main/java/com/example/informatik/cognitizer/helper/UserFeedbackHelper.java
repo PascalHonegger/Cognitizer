@@ -32,6 +32,8 @@ public class UserFeedbackHelper {
         //Can take up as long as it wants
         dialog.setIndeterminate(true);
 
+        dialog.setTitle(title);
+
         dialog.show();
 
         //Return dialog, this way it can be closed again using the dismiss() function

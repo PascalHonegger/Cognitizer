@@ -73,16 +73,21 @@ public class RecognizeTextFragment extends ImageUsingFragmentBase {
     }
 
     public void doRecognize() {
-        ProgressDialog dialog = UserFeedbackHelper.showProgress(getContext(), getString(R.string.analysing_image));
+        final ProgressDialog dialog = UserFeedbackHelper.showProgress(getContext(), getString(R.string.analysing_image));
 
-        try {
-            resultText.setText(new RecognizeTextTask(client).execute(mBitmap).get());
-        } catch (Exception e)
-        {
-            ExceptionHandler.handleException(getContext(), e);
-        } finally {
-            dialog.dismiss();
-        }
+        new RecognizeTextTask(client, new RecognizeTextTask.PostExecuteCallback() {
+            @Override
+            public void onSuccess(String result) {
+                dialog.dismiss();
+                resultText.setText(result);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                dialog.dismiss();
+                ExceptionHandler.handleException(getContext(), e);
+            }
+        }).execute(mBitmap);
     }
 
 }

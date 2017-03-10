@@ -9,7 +9,6 @@
 
     <include layout="@layout/picture_picker"/>
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,12 +18,13 @@
         android:layout_marginLeft="6dp"
         android:layout_marginTop="6dp"/>
     <TextView
+        android:id="@+id/imageDescription"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="6dp"
-        android:layout_marginRight="6dp"/>
+        android:layout_marginRight="6dp" />
 
     <ListView
         android:id="@+id/tagResultList"

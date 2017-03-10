@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.microsoft.projectoxford.vision.VisionServiceClient;
-import com.microsoft.projectoxford.vision.contract.AnalysisResult;
 import com.microsoft.projectoxford.vision.contract.LanguageCodes;
 import com.microsoft.projectoxford.vision.contract.Line;
 import com.microsoft.projectoxford.vision.contract.OCR;
@@ -14,14 +13,17 @@ import com.microsoft.projectoxford.vision.contract.Word;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.concurrent.ExecutionException;
 
 public class RecognizeTextTask extends AsyncTask<Bitmap, Void, String> {
     // Store error message
-    private Exception e = null;
+    private Exception exception = null;
     private VisionServiceClient visionServiceClient;
+    private PostExecuteCallback callback;
 
-    public RecognizeTextTask(VisionServiceClient visionServiceClient) {
+    public RecognizeTextTask(VisionServiceClient visionServiceClient, PostExecuteCallback callback) {
         this.visionServiceClient = visionServiceClient;
+        this.callback = callback;
     }
 
     @Override
@@ -50,18 +52,26 @@ public class RecognizeTextTask extends AsyncTask<Bitmap, Void, String> {
 
             return result;
         } catch (Exception e) {
-            this.e = e;    // Store error
+            this.exception = e;    // Store error
         }
 
         return null;
     }
 
-    @Override
-    protected void onPostExecute(String data) {
-        super.onPostExecute(data);
-        if (e != null) {
-            //TODO Exception handler?
-            e.printStackTrace();
+    protected void onPostExecute(String result) {
+        if(exception != null) {
+            callback.onError(exception);
+        } else {
+            try {
+                callback.onSuccess(get());
+            } catch (InterruptedException | ExecutionException e) {
+                callback.onError(e);
+            }
         }
+    }
+
+    public interface PostExecuteCallback {
+        void onSuccess(String result);
+        void onError(Exception e);
     }
 }

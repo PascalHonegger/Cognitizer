@@ -4,4 +4,5 @@
     <string name="computerVisionKey">bc3973d5b0ba4e68817a4d3e68888ba3</string>
     <string name="analysing_image">Analysing image…</string>
     <string name="title_activity_analyse">AnalyzeActivity</string>
+    <string name="analyzing_voice">Analyzing Voice…</string>
 </resources>
