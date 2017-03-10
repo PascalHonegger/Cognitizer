@@ -31,14 +31,14 @@
                 android:id="@+id/cameraPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/primary_text_dark"
+                android:backgroundTint="@android:color/white"
                 android:src="@drawable/camera" />
 
             <ImageButton
                 android:id="@+id/filePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/primary_text_dark"
+                android:backgroundTint="@android:color/white"
                 android:src="@drawable/drive_file" />
 
         </LinearLayout>
