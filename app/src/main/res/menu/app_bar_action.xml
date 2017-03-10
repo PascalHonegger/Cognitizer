@@ -5,5 +5,6 @@
         android:id="@+id/action_favorite"
         android:icon="@drawable/exit_to_app_black"
         android:title="exit"
+        android:onClick="logout"
         app:showAsAction="ifRoom"/>
 </menu>

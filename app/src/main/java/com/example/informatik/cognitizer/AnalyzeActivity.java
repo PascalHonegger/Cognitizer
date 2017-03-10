@@ -62,4 +62,8 @@ public class AnalyzeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.app_bar_action, menu);
         return true;
     }
+
+    public void logout(MenuItem item) {
+        finish();
+    }
 }
