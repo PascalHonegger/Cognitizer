@@ -70,6 +70,9 @@ public class AuthorizeUserTask extends AsyncTask<File, Void, AuthorizeUserTaskRe
         return result;
     }
 
+    /**
+     * @param result
+     */
     protected void onPostExecute(AuthorizeUserTaskResult result) {
         if(exception != null) {
             callback.onError(exception);

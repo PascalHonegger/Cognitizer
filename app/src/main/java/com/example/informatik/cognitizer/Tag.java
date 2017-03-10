@@ -1,11 +1,8 @@
 package com.example.informatik.cognitizer;
 
-/**
- * Created by Informatik on 10.03.2017.
- */
-
+//Data container for ListView
 public class Tag {
-    public String name;
+    public String name; //name of the tag
 
     public Tag(String name){
         this.name = name;
