@@ -5,13 +5,13 @@
             android:id="@+id/action_picture"
             android:enabled="true"
             android:icon="@drawable/camera"
-            android:title="PictureAnalyser"
+            android:title="Picture Analyser"
             app:showAsAction="ifRoom" />
 
         <item
             android:id="@+id/action_text"
             android:enabled="true"
             android:icon="@drawable/text_fields"
-            android:title="TextAnalyser"
+            android:title="Text Recognizer"
             app:showAsAction="ifRoom" />
 </menu>

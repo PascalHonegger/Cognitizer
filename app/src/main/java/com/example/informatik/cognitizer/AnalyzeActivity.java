@@ -45,12 +45,12 @@ public class AnalyzeActivity extends AppCompatActivity {
             case R.id.action_text:
                 manager.beginTransaction().replace(R.id.analysePlaceholder, new RecognizeTextFragment()).commit();
 
-                newTitle = "Recognize Text";
+                newTitle = "Text Recognizer";
                 break;
             case R.id.action_picture:
                 manager.beginTransaction().replace(R.id.analysePlaceholder, new DescribeImageFragment()).commit();
 
-                newTitle = "Describe Image";
+                newTitle = "Picture Analyser";
                 break;
             default:
                 Log.w("Navigation", "Unknown tab " + id + "cannot be selected");

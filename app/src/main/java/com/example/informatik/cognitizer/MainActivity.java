@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_register:
                 manager.beginTransaction().replace(R.id.placeholder, new RegisterFragment()).commit();
 
-                newTitle += "Registration";
+                newTitle += "Register";
                 break;
             default:
                 Log.w("Navigation", "Unknown tab " + id + "cannot be selected");
